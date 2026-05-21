@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REMINISCE AI 🎨 - Bring B&W Photos to Life</title>
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Intelligent deep learning-based image colorization system powered by DeOldify and REMINISCE AI. Upload any grayscale picture and convert it into color in high resolution.">
+    <meta name="author" content="REMINISCE AI Team">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- Top Left Branding Navbar -->
+    <nav class="top-nav animate-fade-in">
+        <div class="logo-container">
+            <span class="logo-text">REMINISCE <span class="logo-highlight">AI</span></span>
+        </div>
+    </nav>
+
+    <main class="app-container">
+        <!-- Premium Header Area -->
+        <header class="app-header animate-slide-up" id="app-header">
+            <h1 class="main-title">REMINISCE AI 🎨</h1>
+            <p class="subtitle">Bring your vintage history and old memories back to life in vivid, realistic color using DeOldify deep learning.</p>
+        </header>
+
+        <!-- Main Workspace grid (Rearranged for centered upload) -->
+        <section class="workspace-grid single-column animate-slide-up">
+            
+            <!-- Control & Upload Card -->
+            <article class="card upload-card" id="upload-card">
+                <h2 class="card-title">Upload Grayscale Photo</h2>
+                <p class="card-subtitle">Select or drag & drop any black & white image file.</p>
+                
+                <!-- File Drop Zone Area -->
+                <div class="drop-zone" id="drop-zone">
+                    <div class="drop-zone-content">
+                        <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        <span class="drop-zone-text">Drag & drop your file here</span>
+                        <span class="drop-zone-or">or</span>
+                        <button class="btn btn-secondary" id="browse-btn" type="button">Browse Computer</button>
+                        <input type="file" id="file-input" class="file-input" accept="image/*" />
+                    </div>
+                </div>
+
+                <!-- Selected File Info -->
+                <div class="file-info" id="file-info" style="display: none;">
+                    <span class="file-name" id="selected-file-name">filename.jpg</span>
+                    <button class="btn-clear" id="btn-clear" title="Remove file">&times;</button>
+                </div>
+
+                <!-- Submit Colorize Action Button -->
+                <button class="btn btn-primary btn-submit" id="btn-colorize" disabled>
+                    <span>Colorize Image ⚡</span>
+                </button>
+            </article>
+
+            <!-- Loading State Spinner Overlay -->
+            <div class="loading-state" id="loading-state" style="display: none;">
+                <div class="spinner"></div>
+                <p class="loading-title">Analyzing image structure...</p>
+                <p class="loading-subtitle">Processing neural networks with DeOldify GAN model. Please wait.</p>
+            </div>
+
+            <!-- Nostalgia & Project Explanation Section under the Upload section -->
+            <section class="nostalgia-section" id="nostalgia-section">
+                <div class="nostalgia-header">
+                    <svg class="nostalgia-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h2 class="section-title">Preserving Memories, Reviving Nostalgia</h2>
+                </div>
+                <p class="section-desc">
+                    Memories are the canvas of our life's journey, but time can fade the vibrant colors of our most cherished moments. <strong>REMINISCE AI</strong> bridges the gap to your past. By transforming vintage black & white photographs into color, we unlock powerful nostalgic triggers that connect you deeply with ancestors, forgotten places, and childhood memories.
+                </p>
+                <div class="nostalgia-features">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <span class="feature-icon">✨</span>
+                        </div>
+                        <h3>Deep Learning GANs</h3>
+                        <p>Powered by advanced DeOldify neural networks that analyze lighting, textures, and context to predict natural, historically accurate colors.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <span class="feature-icon">❤️</span>
+                        </div>
+                        <h3>Nostalgic Connection</h3>
+                        <p>Research shows colorized photos evoke stronger emotional responses and sensory immersion, making old memories feel like yesterday.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <span class="feature-icon">🔍</span>
+                        </div>
+                        <h3>LAB Detail Preservation</h3>
+                        <p>Our algorithm blends color predictions into the original high-resolution luminance channel, keeping every grain of texture perfectly sharp.</p>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Premium Web Footer -->
+        <footer class="app-footer">
+            <p>&copy; 2026 REMINISCE AI Studio. Powering restoration with Deep Learning.</p>
+            <p class="footer-sub">Leverages DeOldify SAGAN, ONNX Runtime, and OpenCV for premium detail preservation.</p>
+        </footer>
+    </main>
+
+    <!-- JS script -->
+    <script src="/static/main.js"></script>
+</body>
+</html>

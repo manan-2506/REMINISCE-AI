@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REMINISCE AI 🎨 - Your Memories in Vivid Color</title>
+    
+    <!-- Meta tags for SEO -->
+    <meta name="description" content="Witness your memories restored in rich, high-resolution color. Powered by DeOldify and REMINISCE AI deep learning.">
+    <meta name="author" content="REMINISCE AI Team">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- Top Left Branding Navbar -->
+    <nav class="top-nav animate-fade-in">
+        <div class="logo-container" onclick="window.location.href='/'">
+            <span class="logo-text">REMINISCE <span class="logo-highlight">AI</span></span>
+        </div>
+    </nav>
+
+    <main class="app-container result-container">
+        <!-- Premium Header Area -->
+        <header class="app-header animate-slide-up" id="app-header">
+            <h1 class="main-title">Memories Restored ✨</h1>
+            <p class="subtitle">Here is your black & white photograph revitalized with deep learning. Experience history in vivid, true-to-life colors.</p>
+        </header>
+
+        <!-- Centered Result Workspace -->
+        <section class="workspace-grid result-layout animate-slide-up">
+            
+            <article class="card result-card" id="result-card">
+                <h2 class="card-title">Colorized Comparison</h2>
+                <p class="card-subtitle">Drag or compare the details below.</p>
+                
+                <!-- Loading State (fallback) -->
+                <div class="loading-state" id="loading-state">
+                    <div class="spinner"></div>
+                    <p class="loading-title">Retrieving your restored photo...</p>
+                    <p class="loading-subtitle">Accessing the local browser storage engine.</p>
+                </div>
+
+                <!-- Image Side-by-Side Comparison Container -->
+                <div class="comparison-container" id="comparison-container" style="display: none;">
+                    <div class="image-panels">
+                        <div class="image-panel">
+                            <span class="panel-tag">Original Grayscale</span>
+                            <img id="preview-input" class="preview-img" src="" alt="Grayscale Input Preview" />
+                        </div>
+                        <div class="image-panel">
+                            <span class="panel-tag tag-colorized">Colorized Output</span>
+                            <img id="preview-output" class="preview-img" src="" alt="Colorized Output Preview" />
+                        </div>
+                    </div>
+
+                    <!-- Glowing Action Buttons (Including Download and Restart Button) -->
+                    <div class="result-actions-grid">
+                        <a href="" id="btn-download" class="btn btn-success btn-download">
+                            <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            <span>Download Colorized Image 📥</span>
+                        </a>
+                        <button class="btn btn-outline" id="btn-restart" onclick="handleRestart()">
+                            <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.706 8h-2.12" />
+                            </svg>
+                            <span>Colorize Another Photo 🔄</span>
+                        </button>
+                    </div>
+                </div>
+
+            </article>
+        </section>
+
+        <!-- Premium Web Footer -->
+        <footer class="app-footer">
+            <p>&copy; 2026 REMINISCE AI Studio. Powering restoration with Deep Learning.</p>
+            <p class="footer-sub">Leverages DeOldify SAGAN, ONNX Runtime, and OpenCV for premium detail preservation.</p>
+        </footer>
+    </main>
+
+    <!-- JS script -->
+    <script src="/static/result.js"></script>
+</body>
+</html>
