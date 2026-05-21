@@ -14,7 +14,7 @@ DEOLDIFY_MODEL_FILE = "models/deoldify-art.onnx"
 
 # ====== Core DeOldify Logic ====== #
 def colorize_deoldify_core(img, session):
-    """Core colorization logic using ONNX runtime"""
+    """Core colorization logic using ONNX runtime with improved color handling"""
     h, w = img.shape[:2]
     
     # Convert BGR to RGB
@@ -52,6 +52,14 @@ def colorize_deoldify_core(img, session):
     original_lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
     original_L = original_lab[:, :, 0]
 
+    # Non-linear brightness enhancement of the Lightness (L) channel
+    # A gentle gamma of 0.85 lifts shadows and midtones to reveal hidden details
+    # while preserving natural contrast and depth of the historical photograph.
+    original_L_float = original_L.astype(np.float32) / 255.0
+    gamma = 0.85  # Universal power-law correction to lift dark regions naturally
+    brightened_L = np.power(original_L_float, gamma) * 255.0
+    brightened_L = np.clip(brightened_L, 0, 255).astype(np.uint8)
+
     colorized_bgr = cv2.cvtColor(colorized_rgb, cv2.COLOR_RGB2BGR)
     colorized_lab = cv2.cvtColor(colorized_bgr, cv2.COLOR_BGR2LAB)
     colorized_a = colorized_lab[:, :, 1]
@@ -61,8 +69,27 @@ def colorize_deoldify_core(img, session):
     resized_a = cv2.resize(colorized_a, (w, h))
     resized_b = cv2.resize(colorized_b, (w, h))
 
-    # Recombine channels
-    final_lab = cv2.merge([original_L, resized_a, resized_b])
+    # Realistic Asymmetrical Color Tuning (LAB space)
+    # Heavily suppresses DeOldify's natural blue/purple bias in shadows and grays (b < 128),
+    # keeps green soft and natural (a < 128), and gently preserves warm skin/wood tones (a > 128, b > 128).
+    def apply_realistic_color_tuning(channel_a, channel_b):
+        da = channel_a.astype(np.float32) - 128.0
+        db = channel_b.astype(np.float32) - 128.0
+        
+        # a channel: a > 0 is red (gently scale by 1.05x), a < 0 is green (damp by 60% to 0.40x)
+        da_new = np.where(da > 0, da * 1.05, da * 0.40)
+        
+        # b channel: b > 0 is yellow (gently scale by 1.10x), b < 0 is blue (damp by 75% to 0.25x)
+        db_new = np.where(db > 0, db * 1.10, db * 0.25)
+        
+        a_out = np.clip(da_new + 128.0, 0, 255).astype(np.uint8)
+        b_out = np.clip(db_new + 128.0, 0, 255).astype(np.uint8)
+        return a_out, b_out
+
+    resized_a, resized_b = apply_realistic_color_tuning(resized_a, resized_b)
+
+    # Recombine channels with brightened lightness
+    final_lab = cv2.merge([brightened_L, resized_a, resized_b])
     final_bgr = cv2.cvtColor(final_lab, cv2.COLOR_LAB2BGR)
     final_bgr = np.clip(final_bgr, 0, 255).astype(np.uint8)
     
@@ -135,7 +162,7 @@ def run_flask_server():
     print("[Server]: Launching Flask Web Application on http://localhost:5001")
     app = create_flask_app()
     try:
-        app.run(host='0.0.0.0', port=5001, debug=False)
+        app.run(host='0.0.0.0', port=5001, debug=True)
     except Exception as e:
         print(f"[Server Error]: {e}")
 
