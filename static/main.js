@@ -142,11 +142,15 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) {
                 let errorMessage = `HTTP error! Status: ${response.status}`;
                 try {
-                    const errData = await response.json();
-                    errorMessage = errData.error || errorMessage;
-                } catch (e) {
                     const text = await response.text();
-                    if (text) errorMessage = text;
+                    try {
+                        const errData = JSON.parse(text);
+                        errorMessage = errData.error || errorMessage;
+                    } catch (parseErr) {
+                        if (text) errorMessage = text;
+                    }
+                } catch (readErr) {
+                    errorMessage = `Failed to read error response: ${readErr.message}`;
                 }
                 throw new Error(errorMessage);
             }
