@@ -1,0 +1,5 @@
+Flask>=2.0.0
+numpy>=1.19.0
+opencv-python-headless>=4.5.0
+onnxruntime>=1.10.0
+gunicorn>=20.1.0
